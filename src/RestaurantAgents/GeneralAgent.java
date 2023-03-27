@@ -69,7 +69,7 @@ public class GeneralAgent extends Agent {
                     reply.setPerformative(ACLMessage.INFORM);
                     myAgent.send(reply);
                     String id = Parser.parse(order).get("vis_name").getAsString();
-                    RestaurantLauncher.addAgent(OrderAgent.class, id,
+                    RestaurantLauncher.createNewAgent(OrderAgent.class, id,
                         new Object[]{order, msg.getSender().getName()});
                 } else {
                     block();

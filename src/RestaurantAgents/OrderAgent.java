@@ -51,7 +51,7 @@ public class OrderAgent extends Agent {
             var id = ((JsonObject) dish).get("ord_dish_id").getAsString();
             logger.info("Dish " + id + " added to order");
             AID new_aid = new AID(
-                RestaurantLauncher.addAgent(OperationAgent.class, id, new Object[]{dish}));
+                RestaurantLauncher.createNewAgent(OperationAgent.class, id, new Object[]{dish}));
             Restaurant.processes.put(id, new_aid);
         }
 

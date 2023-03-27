@@ -45,7 +45,7 @@ public class ProcessAgent extends Agent {
                     if (getAgent().getAID().getName().contains(key)) {
                         for (var operation : Restaurant.dishes.get(key).get("operations")
                             .getAsJsonArray()) {
-                            RestaurantLauncher.addAgent(OperationAgent.class,
+                            RestaurantLauncher.createNewAgent(OperationAgent.class,
                                 operation.getAsJsonObject().get("equip_type").toString(),
                                 new Object[]{});
                         }

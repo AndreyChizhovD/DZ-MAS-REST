@@ -26,10 +26,10 @@ public class RestaurantLauncher {
         containerController = currentContainer;
     }
 
-    public static String addAgent(Class<?> agentClass, String nickname, Object[] args) {
+    public static String createNewAgent(Class<?> agentClass, String nickname, Object[] args) {
         try {
             AgentController new_agent = containerController.createNewAgent(
-                MessageFormat.format("{0}-{1}-{2}", agentClass.getSimpleName(), nickname,
+                MessageFormat.format("{0} {1} {2}", agentClass.getSimpleName(), nickname,
                     UUID.randomUUID()), agentClass.getName(), args);
             new_agent.start();
             return new_agent.getName();
@@ -40,7 +40,7 @@ public class RestaurantLauncher {
     }
 
     public void start() {
-        addAgent(GeneralAgent.class, "", new Object[]{});
+        createNewAgent(GeneralAgent.class, "", new Object[]{});
     }
 
     public static void createCustomers(Logger logger) {
@@ -50,12 +50,12 @@ public class RestaurantLauncher {
             var name = ((JsonObject) order).get("vis_name").getAsString();
             logger.info("Customer with name" + name);
             Restaurant.customers.put(name,
-                RestaurantLauncher.addAgent(CustomerAgent.class, name, new Object[]{order}));
+                RestaurantLauncher.createNewAgent(CustomerAgent.class, name, new Object[]{order}));
         }
     }
 
     public static void createWarehouse(Logger logger) {
-        RestaurantLauncher.addAgent(WarehouseAgent.class, "",
+        RestaurantLauncher.createNewAgent(WarehouseAgent.class, "",
             new Object[]{Parser.read("product_types.json"), Parser.read("products.json"),});
     }
 
@@ -65,7 +65,7 @@ public class RestaurantLauncher {
             String name = ((JsonObject) equipment).get("equip_type_name").getAsString();
             logger.info("Added equipment with name " + name);
             Restaurant.equipments.put(name,
-                RestaurantLauncher.addAgent(EquipmentAgent.class, name, new Object[]{equipment}));
+                RestaurantLauncher.createNewAgent(EquipmentAgent.class, name, new Object[]{equipment}));
         }
     }
 
@@ -75,7 +75,7 @@ public class RestaurantLauncher {
             String name = ((JsonObject) cook).get("cook_name").getAsString();
             logger.info("Added cook whose name is " + name);
             Restaurant.cookers.put(name,
-                RestaurantLauncher.addAgent(CookAgent.class, name, new Object[]{cook}));
+                RestaurantLauncher.createNewAgent(CookAgent.class, name, new Object[]{cook}));
         }
     }
 
