@@ -59,11 +59,6 @@ public class EquipmentAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
-            logger.info("Equipment " + getAID().getName() + " terminated");
-        } catch (FIPAException e) {
-            System.out.println(e.getMessage());
-        }
+        logger.info("Equipment " + getAID().getName() + " terminated");
     }
 }

@@ -129,11 +129,7 @@ public class OrderAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
             logger.info("Order agent " + aid.getName() + " was terminated");
-        } catch (FIPAException ex) {
-            ex.printStackTrace();
-        }
+
     }
 }

@@ -94,11 +94,6 @@ public class CustomerAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
-            log.info("Customer agent " + getAID().getLocalName() + " succesfully terminated");
-        } catch (FIPAException exc) {
-            exc.printStackTrace();
-        }
+        log.info("Customer agent " + getAID().getLocalName() + " succesfully terminated");
     }
 }

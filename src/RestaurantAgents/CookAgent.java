@@ -64,11 +64,6 @@ public class CookAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
-            logger.info("Cook : " + getAID().getName() + " terminated");
-        } catch (FIPAException e) {
-            System.out.println(e.getMessage());
-        }
+        logger.info("Cook : " + getAID().getName() + " terminated");
     }
 }

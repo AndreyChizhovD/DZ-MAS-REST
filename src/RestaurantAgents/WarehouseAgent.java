@@ -160,11 +160,6 @@ public class WarehouseAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
             logger.info("Warehouse terminated");
-        } catch (FIPAException e) {
-            e.printStackTrace();
-        }
     }
 }

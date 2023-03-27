@@ -58,12 +58,7 @@ public class ProcessAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
             logger.info("Process " + getAID().getName() + " terminated");
-        } catch (FIPAException fe) {
-            fe.printStackTrace();
-        }
     }
 }
 

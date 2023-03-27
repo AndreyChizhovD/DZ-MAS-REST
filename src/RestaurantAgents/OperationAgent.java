@@ -59,11 +59,6 @@ public class OperationAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
-            logger.info("Operation terminated " + getAID().getName());
-        } catch (FIPAException ex) {
-            ex.printStackTrace();
-        }
+        logger.info("Operation terminated " + getAID().getName());
     }
 }

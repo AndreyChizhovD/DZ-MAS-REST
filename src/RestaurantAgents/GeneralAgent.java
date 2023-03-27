@@ -88,11 +88,6 @@ public class GeneralAgent extends Agent {
 
     @Override
     protected void takeDown() {
-        try {
-            DFService.deregister(this);
             logger.info("RUNNER TERMINATED");
-        } catch (FIPAException exc) {
-            exc.printStackTrace();
-        }
     }
 }
