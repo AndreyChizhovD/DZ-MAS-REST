@@ -59,18 +59,18 @@ public class GeneralAgent extends Agent {
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
-                var msg = myAgent.receive(
-                    MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL));
+                var msg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL));
 
                 if (msg != null) {
                     String order = msg.getContent();
+                    logger.info("Received order : " + order);
+
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.INFORM);
                     myAgent.send(reply);
                     String id = Parser.parse(order).get("vis_name").getAsString();
                     RestaurantLauncher.addAgent(OrderAgent.class, id,
                         new Object[]{order, msg.getSender().getName()});
-                    logger.info("Received order : " + order);
                 } else {
                     block();
                 }

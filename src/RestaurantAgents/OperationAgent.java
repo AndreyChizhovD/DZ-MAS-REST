@@ -62,8 +62,8 @@ public class OperationAgent extends Agent {
         try {
             DFService.deregister(this);
             logger.info("Operation terminated " + getAID().getName());
-        } catch (FIPAException fe) {
-            fe.printStackTrace();
+        } catch (FIPAException ex) {
+            ex.printStackTrace();
         }
     }
 }

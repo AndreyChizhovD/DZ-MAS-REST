@@ -58,7 +58,6 @@ public class OrderAgent extends Agent {
         addBehaviour(new Behaviour() {
             private int stage = 0;
             private double estimatedTime;
-            private int replies = 0;
             ACLMessage cfpMessage;
 
             @Override
@@ -69,12 +68,11 @@ public class OrderAgent extends Agent {
                         cfpMessage.addReceiver(WarehouseAgent.aid);
                         cfpMessage.setConversationId(MessageType.ORDER_TIME);
                         cfpMessage.setContent(args[0].toString());
-                        cfpMessage.setReplyWith("cfp" + System.currentTimeMillis());
+                        cfpMessage.setReplyWith(System.currentTimeMillis() + "");
                         myAgent.send(cfpMessage);
-                        messageTemplate =
-                            MessageTemplate.and(
-                                MessageTemplate.MatchConversationId(MessageType.ORDER_TIME),
-                                MessageTemplate.MatchInReplyTo(cfpMessage.getReplyWith()));
+                        messageTemplate = MessageTemplate.and(
+                            MessageTemplate.MatchConversationId(MessageType.ORDER_TIME),
+                            MessageTemplate.MatchInReplyTo(cfpMessage.getReplyWith()));
 
                         logger.info("Dish products");
                         ++stage;
@@ -99,12 +97,11 @@ public class OrderAgent extends Agent {
                             cfpMessage.addReceiver(process);
                         }
                         cfpMessage.setConversationId(MessageType.ORDER_TIME);
-                        cfpMessage.setReplyWith("cfp" + System.currentTimeMillis());
+                        cfpMessage.setReplyWith("" + System.currentTimeMillis());
                         myAgent.send(cfpMessage);
-                        messageTemplate =
-                            MessageTemplate.and(
-                                MessageTemplate.MatchConversationId(MessageType.ORDER_TIME),
-                                MessageTemplate.MatchInReplyTo(cfpMessage.getReplyWith()));
+                        messageTemplate = MessageTemplate.and(
+                            MessageTemplate.MatchConversationId(MessageType.ORDER_TIME),
+                            MessageTemplate.MatchInReplyTo(cfpMessage.getReplyWith()));
                         logger.info("Estimated time");
                         stage++;
                         break;
@@ -115,17 +112,6 @@ public class OrderAgent extends Agent {
                             logger.info("Process " + reply.getSender().getLocalName() +
                                 " will take " + time + " minutes");
                             estimatedTime = Math.max(estimatedTime, Double.parseDouble(time));
-                            if (replies >= Restaurant.processes.size()) {
-                                var cfpTimeMessage = new ACLMessage(ACLMessage.CFP);
-                                AID new_aid = new AID(args[1].toString());
-                                cfpTimeMessage.addReceiver(new_aid);
-                                cfpTimeMessage.setConversationId(MessageType.ORDER_TIME);
-                                cfpTimeMessage.setContent(String.valueOf(estimatedTime));
-                                cfpTimeMessage.setReplyWith("cfp" + System.currentTimeMillis());
-                                myAgent.send(cfpTimeMessage);
-                                stage = 4;
-                            }
-                            ++replies;
                         } else {
                             block();
                         }
@@ -135,6 +121,7 @@ public class OrderAgent extends Agent {
 
             @Override
             public boolean done() {
+
                 return stage > 3;
             }
         });
@@ -145,8 +132,8 @@ public class OrderAgent extends Agent {
         try {
             DFService.deregister(this);
             logger.info("Order agent " + aid.getName() + " was terminated");
-        } catch (FIPAException exc) {
-            exc.printStackTrace();
+        } catch (FIPAException ex) {
+            ex.printStackTrace();
         }
     }
 }

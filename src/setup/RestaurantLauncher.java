@@ -44,7 +44,7 @@ public class RestaurantLauncher {
     }
 
     public static void createCustomers(Logger logger) {
-        JsonArray orders = Parser.readAsJson("visitors_orders.json")
+        JsonArray orders = Parser.readJsonObject("visitors_orders.json")
             .getAsJsonArray("visitors_orders");
         for (var order : orders) {
             var name = ((JsonObject) order).get("vis_name").getAsString();
@@ -60,7 +60,7 @@ public class RestaurantLauncher {
     }
 
     public static void createEquipment(Logger logger) {
-        var equipments = Parser.readAsJson("equipment_type.json").getAsJsonArray("equipment_type");
+        var equipments = Parser.readJsonObject("equipment_type.json").getAsJsonArray("equipment_type");
         for (JsonElement equipment : equipments) {
             String name = ((JsonObject) equipment).get("equip_type_name").getAsString();
             logger.info("Added equipment with name " + name);
@@ -69,18 +69,18 @@ public class RestaurantLauncher {
         }
     }
 
-    public static void createCooks(Logger log) {
-        var cooks = Parser.readAsJson("cookers.json").getAsJsonArray("cookers");
+    public static void createCooks(Logger logger) {
+        var cooks = Parser.readJsonObject("cookers.json").getAsJsonArray("cookers");
         for (var cook : cooks) {
-            String cookerName = ((JsonObject) cook).get("cook_name").getAsString();
-            log.info(String.format("Added cook whose name is ", cookerName));
-            Restaurant.cookers.put(cookerName,
-                RestaurantLauncher.addAgent(CookAgent.class, cookerName, new Object[]{cook}));
+            String name = ((JsonObject) cook).get("cook_name").getAsString();
+            logger.info("Added cook whose name is " + name);
+            Restaurant.cookers.put(name,
+                RestaurantLauncher.addAgent(CookAgent.class, name, new Object[]{cook}));
         }
     }
 
     public static void createDishes(Logger logger) {
-        JsonArray dishes = Parser.readAsJson("dish_cards.json").getAsJsonArray("dish_cards");
+        JsonArray dishes = Parser.readJsonObject("dish_cards.json").getAsJsonArray("dish_cards");
         for (var dish : dishes) {
             var dishName = ((JsonObject) dish).get("dish_name").getAsString();
             Restaurant.dishes.put(dishName, dish.getAsJsonObject());

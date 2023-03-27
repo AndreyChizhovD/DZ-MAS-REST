@@ -17,7 +17,8 @@ public class Parser {
         return "";
     }
 
-    public static JsonObject readAsJson(String name) {
+    public static JsonObject readJsonObject(String name) {
+
         return parse(read(name));
     }
 
