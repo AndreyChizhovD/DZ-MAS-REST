@@ -1,6 +1,7 @@
 package RestaurantAgents;
 
 import com.google.gson.JsonObject;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -10,12 +11,16 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
 import java.util.logging.Logger;
+
 import setup.Parser;
+import setup.Restaurant;
 import setup.RestaurantLauncher;
+
 import Templates.AgentType;
 import Templates.MessageType;
-import setup.Restaurant;
+
 
 public class OrderAgent extends Agent {
 

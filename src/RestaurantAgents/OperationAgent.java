@@ -1,6 +1,7 @@
 package RestaurantAgents;
 
 import Templates.AgentType;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -10,19 +11,20 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
 import java.util.Random;
 import java.util.logging.Logger;
 
 public class OperationAgent extends Agent {
 
-    private Logger log;
+    private Logger logger;
     public static AID aid;
 
     @Override
     protected void setup() {
         aid = getAID();
-        log = Logger.getLogger(this.getClass().getName());
-        log.info("Operation agent created" + aid.getLocalName() + " started");
+        logger = Logger.getLogger(aid.getName());
+        logger.info("Operation agent created" + aid.getLocalName() + " started");
         try {
             DFAgentDescription agentDescription = new DFAgentDescription();
             agentDescription.setName(aid);
@@ -59,7 +61,7 @@ public class OperationAgent extends Agent {
     protected void takeDown() {
         try {
             DFService.deregister(this);
-            log.info("Operation terminated " + getAID().getName());
+            logger.info("Operation terminated " + getAID().getName());
         } catch (FIPAException fe) {
             fe.printStackTrace();
         }

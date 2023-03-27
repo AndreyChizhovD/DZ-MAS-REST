@@ -10,7 +10,9 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
+
 import java.util.logging.Logger;
+
 import Templates.AgentType;
 
 public class EquipmentAgent extends Agent {

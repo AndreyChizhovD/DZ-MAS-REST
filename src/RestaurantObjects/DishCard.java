@@ -5,29 +5,9 @@ import java.util.ArrayList;
 
 public class DishCard implements Serializable {
 
-    private long card_id;
-    private String dish_name;
-    private String card_descr;
-    private double card_time;
+    public long card_id;
+    public String dish_name;
+    public String card_descr;
+    public double card_time;
     ArrayList<Operation> operations;
-
-    public long id() {
-        return card_id;
-    }
-
-    public String name() {
-        return dish_name;
-    }
-
-    public String description() {
-        return card_descr;
-    }
-
-    public double time() {
-        return card_time;
-    }
-
-    public ArrayList<Operation> operations() {
-        return operations;
-    }
 }

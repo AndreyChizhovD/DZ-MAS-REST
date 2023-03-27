@@ -5,12 +5,15 @@ import RestaurantAgents.CustomerAgent;
 import RestaurantAgents.EquipmentAgent;
 import RestaurantAgents.GeneralAgent;
 import RestaurantAgents.WarehouseAgent;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
+
 import java.text.MessageFormat;
 import java.util.UUID;
 import java.util.logging.Logger;

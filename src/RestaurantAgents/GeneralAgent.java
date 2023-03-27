@@ -1,6 +1,7 @@
 package RestaurantAgents;
 
 import Templates.AgentType;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -10,19 +11,21 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
 import java.util.logging.Logger;
+
 import setup.Parser;
 import setup.RestaurantLauncher;
 
 public class GeneralAgent extends Agent {
 
-    private Logger log;
+    private Logger logger;
     public static AID aid;
 
     @Override
     protected void setup() {
-        log = Logger.getLogger(this.getClass().getName());
-        log.info("GENERAL MANAGER AGENT CREATED");
+        logger = Logger.getLogger(this.getClass().getName());
+        logger.info("GENERAL MANAGER AGENT CREATED");
         aid = getAID();
         try {
             DFAgentDescription agentDescription = new DFAgentDescription();
@@ -66,7 +69,7 @@ public class GeneralAgent extends Agent {
                     String id = Parser.parse(order).get("vis_name").getAsString();
                     RestaurantLauncher.addAgent(OrderAgent.class, id,
                         new Object[]{order, msg.getSender().getName()});
-                    log.info("Received order:" + order);
+                    logger.info("Received order : " + order);
                 } else {
                     block();
                 }
@@ -75,18 +78,18 @@ public class GeneralAgent extends Agent {
     }
 
     private void createRestaurantAgents() {
-        RestaurantLauncher.createCustomers(log);
-        RestaurantLauncher.createWarehouse(log);
-        RestaurantLauncher.createEquipment(log);
-        RestaurantLauncher.createCooks(log);
-        RestaurantLauncher.createDishes(log);
+        RestaurantLauncher.createCustomers(logger);
+        RestaurantLauncher.createWarehouse(logger);
+        RestaurantLauncher.createEquipment(logger);
+        RestaurantLauncher.createCooks(logger);
+        RestaurantLauncher.createDishes(logger);
     }
 
     @Override
     protected void takeDown() {
         try {
             DFService.deregister(this);
-            log.info("RUNNER TERMINATED");
+            logger.info("RUNNER TERMINATED");
         } catch (FIPAException exc) {
             exc.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package RestaurantAgents;
 
 import setup.Restaurant;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -8,8 +9,11 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+
 import java.util.logging.Logger;
+
 import setup.RestaurantLauncher;
+
 import Templates.AgentType;
 
 public class ProcessAgent extends Agent {
