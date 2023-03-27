@@ -1,3 +1,4 @@
+import RestaurantAgents.GeneralAgent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -17,7 +18,7 @@ public class Main {
         var mainContainer = runtime.createMainContainer(profile);
 
         RestaurantLauncher restaurantLauncher = new RestaurantLauncher(mainContainer);
-        restaurantLauncher.start();
+        restaurantLauncher.createNewAgent(GeneralAgent.class, "", new Object[]{});
 
         try {
             mainContainer.kill();

@@ -39,10 +39,6 @@ public class RestaurantLauncher {
         return "{}-{}-{}";
     }
 
-    public void start() {
-        createNewAgent(GeneralAgent.class, "", new Object[]{});
-    }
-
     public static void createCustomers(Logger logger) {
         JsonArray orders = Parser.readJsonObject("visitors_orders.json")
             .getAsJsonArray("visitors_orders");
@@ -60,12 +56,14 @@ public class RestaurantLauncher {
     }
 
     public static void createEquipment(Logger logger) {
-        var equipments = Parser.readJsonObject("equipment_type.json").getAsJsonArray("equipment_type");
+        var equipments = Parser.readJsonObject("equipment_type.json")
+            .getAsJsonArray("equipment_type");
         for (JsonElement equipment : equipments) {
             String name = ((JsonObject) equipment).get("equip_type_name").getAsString();
             logger.info("Added equipment with name " + name);
             Restaurant.equipments.put(name,
-                RestaurantLauncher.createNewAgent(EquipmentAgent.class, name, new Object[]{equipment}));
+                RestaurantLauncher.createNewAgent(EquipmentAgent.class, name,
+                    new Object[]{equipment}));
         }
     }
 
