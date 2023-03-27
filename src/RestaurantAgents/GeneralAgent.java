@@ -44,8 +44,8 @@ public class GeneralAgent extends Agent {
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
-                var messageTemplate = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-                var msg = myAgent.receive(messageTemplate);
+                var msg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.CFP));
+
                 if (msg != null) {
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.PROPOSE);
@@ -59,8 +59,9 @@ public class GeneralAgent extends Agent {
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
-                var messageTemplate = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
-                var msg = myAgent.receive(messageTemplate);
+                var msg = myAgent.receive(
+                    MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL));
+
                 if (msg != null) {
                     String order = msg.getContent();
                     ACLMessage reply = msg.createReply();

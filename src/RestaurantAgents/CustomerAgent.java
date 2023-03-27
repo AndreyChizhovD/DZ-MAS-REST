@@ -28,7 +28,7 @@ public class CustomerAgent extends Agent {
         log.info("New visitor came in : " + this.getAID().getLocalName() + "!");
         try {
             DFAgentDescription agentDescription = new DFAgentDescription();
-            agentDescription.setName(this.getAID());
+            agentDescription.setName(aid);
             ServiceDescription serviceDescription = new ServiceDescription();
             serviceDescription.setType(AgentType.CUSTOMER);
             serviceDescription.setName(this.getName());
@@ -46,14 +46,11 @@ public class CustomerAgent extends Agent {
             public void action() {
                 switch (step) {
                     case 0:
-                        var cfpMessage = new ACLMessage(ACLMessage.CFP);
-                        cfpMessage.addReceiver(GeneralAgent.aid);
-                        cfpMessage.setConversationId(MessageType.ORDER_ID);
-                        cfpMessage.setReplyWith("cfp" + System.currentTimeMillis());
-                        myAgent.send(cfpMessage);
-                        messageTemplate = MessageTemplate.and(
-                            MessageTemplate.MatchConversationId(MessageType.ORDER_ID),
-                            MessageTemplate.MatchInReplyTo(cfpMessage.getReplyWith()));
+                        var msg = new ACLMessage(ACLMessage.CFP);
+                        msg.addReceiver(GeneralAgent.aid);
+                        msg.setConversationId(MessageType.ORDER_ID);
+                        msg.setReplyWith(System.currentTimeMillis() + "");
+                        myAgent.send(msg);
                         log.info("Visitor asked for menu ");
                         step++;
                         break;
@@ -62,15 +59,12 @@ public class CustomerAgent extends Agent {
                         if (reply != null) {
                             String order_request = args[0].toString();
                             var order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+                            order.setConversationId(MessageType.ORDER_ID);
                             order.addReceiver(GeneralAgent.aid);
                             order.setContent(order_request);
-                            order.setConversationId(MessageType.ORDER_ID);
-                            order.setReplyWith(MessageType.ORDER_ID + System.currentTimeMillis());
+                            order.setReplyWith(System.currentTimeMillis() + MessageType.ORDER_ID);
                             log.info(order_request);
                             myAgent.send(order);
-                            messageTemplate = MessageTemplate.and(
-                                MessageTemplate.MatchConversationId(MessageType.ORDER_ID),
-                                MessageTemplate.MatchInReplyTo(order.getReplyWith()));
                             step++;
                         } else {
                             block();
@@ -78,9 +72,10 @@ public class CustomerAgent extends Agent {
                         break;
                     case 2:
                         messageTemplate = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-                        var msg = myAgent.receive(messageTemplate);
-                        if (msg != null) {
-                            log.info(msg.getContent() + " is estimated time for " + msg.getSender()
+                        var message = myAgent.receive(messageTemplate);
+                        if (message != null) {
+                            log.info(message.getContent() + " is estimated time for "
+                                + message.getSender()
                                 .getName());
                             step++;
                         } else {
